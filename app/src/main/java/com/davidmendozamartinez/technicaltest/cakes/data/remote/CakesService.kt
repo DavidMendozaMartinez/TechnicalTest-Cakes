@@ -1,10 +1,12 @@
 package com.davidmendozamartinez.technicaltest.cakes.data.remote
 
+import com.davidmendozamartinez.technicaltest.cakes.data.remote.model.CakeRemote
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
 
 fun createCakesService(): CakesService {
     val logger = HttpLoggingInterceptor()
@@ -23,4 +25,7 @@ fun createCakesService(): CakesService {
     return retrofit.create(CakesService::class.java)
 }
 
-interface CakesService
+interface CakesService {
+    @GET(Routes.GET_CAKES)
+    suspend fun getCakes(): List<CakeRemote>
+}
