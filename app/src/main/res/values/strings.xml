@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TechnicalTest-Cakes</string>
+
+    <string name="cakes_error_get_cakes">An error has occurred!</string>
 </resources>
