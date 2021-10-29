@@ -8,8 +8,8 @@ import com.davidmendozamartinez.technicaltest.cakes.ui.screen.cakes.CakesViewMod
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +21,9 @@ class CakesViewModel @Inject constructor(private val useCase: GetCakesUseCase) :
     val isErrorVisible: Flow<Boolean> = _state.map { it == ERROR }
 
     private val _cakes = MutableStateFlow<List<Cake>>(emptyList())
-    val cakes: StateFlow<List<Cake>> get() = _cakes
+    val cakes: Flow<List<Cake>> = _cakes.transform { list ->
+        emit(list.distinctBy { it.title }.sortedBy { it.title })
+    }
 
     init {
         getCakes()
