@@ -27,6 +27,10 @@ class CakesViewModel @Inject constructor(private val useCase: GetCakesUseCase) :
         getCakes()
     }
 
+    fun onRefreshTriggered() {
+        getCakes()
+    }
+
     private fun getCakes() {
         _state.value = LOADING
 

@@ -37,11 +37,13 @@ class CakesActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
             viewModel.cakes.collect { adapter.submitList(it) }
         }
+
+        binding.swipeRefresh.setOnRefreshListener { viewModel.onRefreshTriggered() }
     }
 
     private fun setupStateHandler() {
         lifecycleScope.launchWhenStarted {
-            viewModel.isLoadingVisible.collect { binding.progressIndicator.isVisible = it }
+            viewModel.isLoadingVisible.collect { binding.swipeRefresh.isRefreshing = it }
         }
 
         lifecycleScope.launchWhenStarted {
